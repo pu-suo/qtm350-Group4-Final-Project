@@ -1,0 +1,29 @@
+---
+title: "Economic Analysis of European Countries"
+author: "Group 4: Tom Suo 2549787, add yall names here"
+format:
+  html:
+    code-fold: true
+  pdf:
+    geometry: "left=2cm,right=2cm,top=2cm,bottom=2cm"
+jupyter: python3
+---
+
+# Introduction
+Intro of the topic and research question.
+
+# Data Description
+
+
+# Data Analysis
+```{python}
+#| label: load-data
+#| echo: false
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('../data/cleaned_wb_data.csv')
+
+df.head()
+```
