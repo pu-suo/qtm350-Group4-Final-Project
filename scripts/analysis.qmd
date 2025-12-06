@@ -1,19 +1,39 @@
 ---
 title: "Economic Analysis of European Countries"
-author: "Group 4: Tom Suo 2549787, Lucy Liu 2561533 add yall names here"
+author: "Group 4: Tom Suo 2549787, Lucy Liu 2561533, Leo Xu 2592825"
 format:
   html:
     code-fold: true
   pdf:
     geometry: "left=2cm,right=2cm,top=2cm,bottom=2cm"
-jupyter: python3
-
+execute:
+  kernel: python3
 ---
 
+
 # Introduction
-Intro of the topic and research question.
+
+## Context:
+The global economy experienced one of the most significant disturbances in modern history during the 2020 Covid 19 pandemic. Prior to this disruption, Europe overall had relatively predictable economic development defined by gradual increase that stayed overall constant. However, the pandemic forced major economic activities to come to a halt with supply chain breakdowns resulting in the government having to intervene in the labor market to prevent total economic colapse. As we move into the post pandemic era, the pandemic has presented a unique opportunity to investigate how economies of vastly different scale and structure, ranging from established G7 powers to developing transition economies, absorbs shock and regains momentum during major disruptions. 
+
+The project examines the economic inidcators of six selected European countries: Portugal, the United Kingdom, Norway, Albania, Ukraine, and Italy. The countries were selected because they offer a diverse perspective of the European economic sphere. Norway and UK represent well established economies with higher income that have developed financial resources. Italy and Portugal represents southern European economies with varying levels of debt and labor market dynamics. Contrastingly Albania and Ukraine represent economies that are still undergoing development with unique challenges, with Ukraine further affected by the Russian invasion during the 2022 period that further complicates the recovery process from Covid 19.
+
 
 # Data Description
+
+We utilize data from World Bank’s World Development Indicators (WDI) database to conduct this analysis. We specifically focus on three major economic indicators to serve as proxies for the health of the nation's economy: GDP per capita (constant 2015 US$), GDP growth (annual %), Employment to population ratio (15+, total %):
+
+* GDP per capita (constant 2015 US$): This metric provides a view of individual economic wellbeing adjusted for inflation, allowing for accurate comparisons of wealth over time.
+* GDP growth (annual %): This indicator measures the rate at which the economy is expanding or contracting showing us the rate at which the economy is being impacted or recovering.
+* Employment to population ratio (15+, total %): This variable offers insight into the labor market's ability to utilize its available human resources. This is especially a critical factor during the pandemic when lockdowns forced mass unemployment.
+
+In addition to these major economic indicators we have also included a secondary inidcator: rate of primary school children out of school. Including this inidcator will provide a secondary dimension into the socioeconomic stability of the nations. The dataset we selected spans an eight year period from 2017 to 2024 giving us a comprehensive comparison of the pre covid baseline (2017-2019), the disruption year (2020), and the recovery period (2021-2024).
+
+## Research Objectives:
+
+The primary objective of this analysis is to quantify the magnitude of the pandemic's impact and the differing recovery speeds among these European countries. 
+
+Consequently, this project addresses the following research questions: How have GDP per capita, employment-to-population ratios, and GDP growth trends changed before and after COVID-19 across selected European countries, and what do these trends reveal about their economic development trajectories? Furthermore, which indicators are the most correlated with each other? Through time-series visualization and correlation analysis, this report seeks to map the economic scarring left by the pandemic and the varying paths toward recovery.
 
 
 # Data Analysis
