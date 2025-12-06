@@ -1,0 +1,35 @@
+## **Overview**
+
+This project examines how key economic indicators changed before and after the COVID-19 pandemic across six European countries: Portugal, the United Kingdom, Norway, Albania, Ukraine, and Italy.
+
+We analyze trends in GDP per capita, GDP growth, employment to population ratio, and primary school out-of-school rates, and explore how COVID-19 may have altered these development trajectories.
+A correlation matrix is also constructed to evaluate how these variables relate to each other.
+
+## **How to Reproduce the Analysis**
+
+**1. Install dependencies**  
+`pip install -r requirements.txt`
+
+**2. Run data cleaning**  
+`python scripts/data_cleaning.py`
+
+**3. Generate figures and tables**  
+`python scripts/analysis_plots.py`
+
+**4. Render the final report**  
+`quarto render report/final_report.qmd`
+
+## **Data Source**
+
+All indicators are sourced from the World Bank World Development Indicators (WDI) using the wbgapi Python package. The variables used are:
+
+NY.GDP.PCAP.KD — GDP per capita (constant USD)
+
+SL.EMP.TOTL.SP.ZS — Employment to population ratio
+
+NY.GDP.MKTP.KD.ZG — GDP growth rate
+
+SE.PRM.UNER.ZS — Children out of school, primary (% of primary school age)
+
+The dataset is restricted to:
+Portugal, the United Kingdom, Norway, Albania, Ukraine, and Italy.
