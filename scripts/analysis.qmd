@@ -1,12 +1,13 @@
 ---
 title: "Economic Analysis of European Countries"
-author: "Group 4: Tom Suo 2549787, add yall names here"
+author: "Group 4: Tom Suo 2549787, Lucy Liu 2561533 add yall names here"
 format:
   html:
     code-fold: true
   pdf:
     geometry: "left=2cm,right=2cm,top=2cm,bottom=2cm"
 jupyter: python3
+
 ---
 
 # Introduction
@@ -27,3 +28,36 @@ df = pd.read_csv('../data/cleaned_wb_data.csv')
 
 df.head()
 ```
+
+## Labor Market Participation 
+```{python}
+
+plt.figure()
+plt.figure(figsize=(12,6))
+
+for country in df["country_name"].unique():
+    sub = df[df["country_name"] == country]
+    plt.plot(sub["year"], sub["emp_ratio"], marker="o", label=country)
+
+plt.xlabel("Year")
+plt.ylabel("Employment Ratio (%)")
+plt.title("Employment Ratio Change Over the Years")
+plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+
+
+```
+
+This graph shows a uniform COVID-19 shock across these six countries in 2020, followed by divergent recovery trajectories. The general drop in 2020 indicates a disruption to all the labor markets; however, the speed and robustness of the subsequent recovery varied considerably.
+
+Norway shows the most resilient pattern: following a marginal decrease in 2020, its employment ratio rapidly rebounded, passing pre-pandemic levels by 2022. This performance indicates a robust labor market and successful economic stabilization policies.
+
+The UK also recovered, albeit at a slower pace, stabilizing slightly below its 2019 peak. This suggests the persistence of post-pandemic labor shortages and structural economic adjustments. Portugal experienced a notable contraction in 2020 but showed a consistent recovery through 2023, reflecting the gradual reabsorption of workers as the tourism and services sectors reopened.
+
+Albania endured a sharper pandemic-era decline than its Western European counterparts but subsequently demonstrated a powerful resurgence, surpassing its pre-COVID levels by 2022. This trajectory may be attributed to enhanced labor participation or rapid recovery in key domestic industries.
+
+Italy consistently maintains the lowest employment ratio. While the COVID-19 crisis exacerbated its underlying structural weaknesses, the nation has registered a modest upward trend since 2021. This improvement, while discernible, remains constrained by long-standing challenges, particularly low rates of female and youth employment.
+
+In contrast, Ukraine's path deviates significantly from the broader recovery pattern. Following its 2020 decline, its employment ratio continued to fall after 2021 due to the ongoing conflict. This decline reflects large-scale population displacement, widespread economic disruption, and severe demographic shocks. Collectively, the data illustrate that while most European nations had recovered from the COVID-19 impact by 2022 or 2023, Ukraine's situation underscores the profound and protracted effects of conflict on labor markets and overall economic stability.
