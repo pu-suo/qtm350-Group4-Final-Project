@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Group 4: Tom Suo 2549787, Lucy Liu 2561533 add yall names here">
+<meta name="author" content="Group 4: Tom Suo 2549787, Lucy Liu 2561533, Leo Xu 2592825, Mike Wu 2549432">
 
 <title>Economic Analysis of European Countries</title>
 <style>
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -47,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="analysis.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="../analysis.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -62,7 +97,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Group 4: Tom Suo 2549787, Lucy Liu 2561533 add yall names here </p>
+             <p>Group 4: Tom Suo 2549787, Lucy Liu 2561533, Leo Xu 2592825, Mike Wu 2549432 </p>
           </div>
   </div>
     
@@ -77,10 +112,26 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>Intro of the topic and research question.</p>
+<section id="context" class="level2">
+<h2 class="anchored" data-anchor-id="context">Context:</h2>
+<p>The global economy experienced one of the most significant disturbances in modern history during the 2020 Covid 19 pandemic. Prior to this disruption, Europe overall had relatively predictable economic development defined by gradual increase that stayed overall constant. However, the pandemic forced major economic activities to come to a halt with supply chain breakdowns resulting in the government having to intervene in the labor market to prevent total economic colapse. As we move into the post pandemic era, the pandemic has presented a unique opportunity to investigate how economies of vastly different scale and structure, ranging from established G7 powers to developing transition economies, absorbs shock and regains momentum during major disruptions.</p>
+<p>The project examines the economic inidcators of six selected European countries: Portugal, the United Kingdom, Norway, Albania, Ukraine, and Italy. The countries were selected because they offer a diverse perspective of the European economic sphere. Norway and UK represent well established economies with higher income that have developed financial resources. Italy and Portugal represents southern European economies with varying levels of debt and labor market dynamics. Contrastingly Albania and Ukraine represent economies that are still undergoing development with unique challenges, with Ukraine further affected by the Russian invasion during the 2022 period that further complicates the recovery process from Covid 19.</p>
+</section>
 </section>
 <section id="data-description" class="level1">
 <h1>Data Description</h1>
+<p>We utilize data from World Bank’s World Development Indicators (WDI) database to conduct this analysis. We specifically focus on three major economic indicators to serve as proxies for the health of the nation’s economy: GDP per capita (constant 2015 US$), GDP growth (annual %), Employment to population ratio (15+, total %):</p>
+<ul>
+<li>GDP per capita (constant 2015 US$): This metric provides a view of individual economic wellbeing adjusted for inflation, allowing for accurate comparisons of wealth over time.</li>
+<li>GDP growth (annual %): This indicator measures the rate at which the economy is expanding or contracting showing us the rate at which the economy is being impacted or recovering.</li>
+<li>Employment to population ratio (15+, total %): This variable offers insight into the labor market’s ability to utilize its available human resources. This is especially a critical factor during the pandemic when lockdowns forced mass unemployment.</li>
+</ul>
+<p>In addition to these major economic indicators we have also included a secondary inidcator: rate of primary school children out of school. Including this inidcator will provide a secondary dimension into the socioeconomic stability of the nations. The dataset we selected spans an eight year period from 2017 to 2024 giving us a comprehensive comparison of the pre covid baseline (2017-2019), the disruption year (2020), and the recovery period (2021-2024).</p>
+<section id="research-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="research-objectives">Research Objectives:</h2>
+<p>The primary objective of this analysis is to quantify the magnitude of the pandemic’s impact and the differing recovery speeds among these European countries.</p>
+<p>Consequently, this project addresses the following research questions: How have GDP per capita, employment-to-population ratios, and GDP growth trends changed before and after COVID-19 across selected European countries, and what do these trends reveal about their economic development trajectories? Furthermore, which indicators are the most correlated with each other? Through time-series visualization and correlation analysis, this report seeks to map the economic scarring left by the pandemic and the varying paths toward recovery.</p>
+</section>
 </section>
 <section id="data-analysis" class="level1">
 <h1>Data Analysis</h1>
@@ -159,6 +210,87 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
+<section id="labor-market-participation" class="level2">
+<h2 class="anchored" data-anchor-id="labor-market-participation">Labor Market Participation</h2>
+<div id="7754b0cd" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">6</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> country <span class="kw">in</span> df[<span class="st">"country_name"</span>].unique():</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    sub <span class="op">=</span> df[df[<span class="st">"country_name"</span>] <span class="op">==</span> country]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    plt.plot(sub[<span class="st">"year"</span>], sub[<span class="st">"emp_ratio"</span>], marker<span class="op">=</span><span class="st">"o"</span>, label<span class="op">=</span>country)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Year"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Employment Ratio (%)"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Employment Ratio Change Over the Years"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="dv">1</span>), loc<span class="op">=</span><span class="st">"upper left"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Figure size 672x480 with 0 Axes&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis_files/figure-html/cell-3-output-2.png" width="1139" height="564" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This graph shows a uniform COVID-19 shock across these six countries in 2020, followed by divergent recovery trajectories. The general drop in 2020 indicates a disruption to all the labor markets; however, the speed and robustness of the subsequent recovery varied considerably.</p>
+<p>Norway shows the most resilient pattern: following a marginal decrease in 2020, its employment ratio rapidly rebounded, passing pre-pandemic levels by 2022. This performance indicates a robust labor market and successful economic stabilization policies.</p>
+<p>The UK also recovered, albeit at a slower pace, stabilizing slightly below its 2019 peak. This suggests the persistence of post-pandemic labor shortages and structural economic adjustments. Portugal experienced a notable contraction in 2020 but showed a consistent recovery through 2023, reflecting the gradual reabsorption of workers as the tourism and services sectors reopened.</p>
+<p>Albania endured a sharper pandemic-era decline than its Western European counterparts but subsequently demonstrated a powerful resurgence, surpassing its pre-COVID levels by 2022. This trajectory may be attributed to enhanced labor participation or rapid recovery in key domestic industries.</p>
+<p>Italy consistently maintains the lowest employment ratio. While the COVID-19 crisis exacerbated its underlying structural weaknesses, the nation has registered a modest upward trend since 2021. This improvement, while discernible, remains constrained by long-standing challenges, particularly low rates of female and youth employment.</p>
+<p>In contrast, Ukraine’s path deviates significantly from the broader recovery pattern. Following its 2020 decline, its employment ratio continued to fall after 2021 due to the ongoing conflict. This decline reflects large-scale population displacement, widespread economic disruption, and severe demographic shocks. Collectively, the data illustrate that while most European nations had recovered from the COVID-19 impact by 2022 or 2023, Ukraine’s situation underscores the profound and protracted effects of conflict on labor markets and overall economic stability.</p>
+</section>
+<section id="correlation-analysis-of-key-economic-indicators" class="level2">
+<h2 class="anchored" data-anchor-id="correlation-analysis-of-key-economic-indicators">Correlation Analysis of Key Economic Indicators</h2>
+<div id="cell-correlation-matrix" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select variables for correlation analysis</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>corr_vars <span class="op">=</span> df[[</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gdp_pc"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gdp_growth"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"emp_ratio"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"children_out_of_school_primary"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>]]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute correlation matrix</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>corr_matrix <span class="op">=</span> corr_vars.corr()</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot correlation heatmap</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>))</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>sns.heatmap(</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    corr_matrix,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    annot<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    fmt<span class="op">=</span><span class="st">".2f"</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"coolwarm"</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    square<span class="op">=</span><span class="va">True</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Correlation Matrix of Key Economic Indicators"</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis_files/figure-html/correlation-matrix-output-1.png" id="correlation-matrix" width="631" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This correlation matrix summarizes the relationships among GDP per capita, GDP growth, employment-to-population ratio, and primary school children out of school across the six European countries. The most notable positive relationship appears between GDP per capita and employment ratio (0.65), indicating that countries with stronger labor market participation tend to have higher income levels. This suggests that long-term economic development and labor utilization move closely together.</p>
+<p>In contrast, GDP growth shows very weak correlations with all other variables, implying that short-term economic fluctuations do not strongly align with structural indicators such as income level, employment conditions, or education outcomes. This highlights that growth rates can be highly volatile and influenced by temporary shocks, especially during crisis periods like COVID-19.</p>
+<p>The negative correlation between children out of school and GDP per capita (−0.45) suggests that higher-income countries generally experience lower levels of educational disruption, reflecting better access to schooling and stronger institutional capacity. Similarly, the negative relationship between children out of school and employment ratio (−0.35) indicates that weaker labor markets tend to coincide with poorer educational outcomes.</p>
+<p>Overall, the correlation results reveal a clear structural linkage between economic development, labor market strength, and educational stability, while GDP growth remains largely independent. These findings complement the time-series results by showing that although short-term growth fluctuates sharply during COVID-19, long-run development indicators remain tightly connected.</p>
+</section>
 </section>
 
 </main>

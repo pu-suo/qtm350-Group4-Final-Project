@@ -1,6 +1,6 @@
 ---
 title: "Economic Analysis of European Countries"
-author: "Group 4: Tom Suo 2549787, Lucy Liu 2561533, Leo Xu 2592825"
+author: "Group 4: Tom Suo 2549787, Lucy Liu 2561533, Leo Xu 2592825, Mike Wu 2549432"
 format:
   html:
     code-fold: true
@@ -91,3 +91,45 @@ Albania endured a sharper pandemic-era decline than its Western European counter
 Italy consistently maintains the lowest employment ratio. While the COVID-19 crisis exacerbated its underlying structural weaknesses, the nation has registered a modest upward trend since 2021. This improvement, while discernible, remains constrained by long-standing challenges, particularly low rates of female and youth employment.
 
 In contrast, Ukraine's path deviates significantly from the broader recovery pattern. Following its 2020 decline, its employment ratio continued to fall after 2021 due to the ongoing conflict. This decline reflects large-scale population displacement, widespread economic disruption, and severe demographic shocks. Collectively, the data illustrate that while most European nations had recovered from the COVID-19 impact by 2022 or 2023, Ukraine's situation underscores the profound and protracted effects of conflict on labor markets and overall economic stability.
+
+
+
+
+## Correlation Analysis of Key Economic Indicators
+```{python}
+#| label: correlation-matrix
+#| echo: true
+
+# Select variables for correlation analysis
+corr_vars = df[[
+    "gdp_pc",
+    "gdp_growth",
+    "emp_ratio",
+    "children_out_of_school_primary"
+]]
+
+# Compute correlation matrix
+corr_matrix = corr_vars.corr()
+
+# Plot correlation heatmap
+plt.figure(figsize=(8,6))
+sns.heatmap(
+    corr_matrix,
+    annot=True,
+    fmt=".2f",
+    cmap="coolwarm",
+    square=True
+)
+
+plt.title("Correlation Matrix of Key Economic Indicators")
+plt.tight_layout()
+plt.show()
+```
+
+This correlation matrix summarizes the relationships among GDP per capita, GDP growth, employment-to-population ratio, and primary school children out of school across the six European countries. The most notable positive relationship appears between GDP per capita and employment ratio (0.65), indicating that countries with stronger labor market participation tend to have higher income levels. This suggests that long-term economic development and labor utilization move closely together.
+
+In contrast, GDP growth shows very weak correlations with all other variables, implying that short-term economic fluctuations do not strongly align with structural indicators such as income level, employment conditions, or education outcomes. This highlights that growth rates can be highly volatile and influenced by temporary shocks, especially during crisis periods like COVID-19.
+
+The negative correlation between children out of school and GDP per capita (−0.45) suggests that higher-income countries generally experience lower levels of educational disruption, reflecting better access to schooling and stronger institutional capacity. Similarly, the negative relationship between children out of school and employment ratio (−0.35) indicates that weaker labor markets tend to coincide with poorer educational outcomes.
+
+Overall, the correlation results reveal a clear structural linkage between economic development, labor market strength, and educational stability, while GDP growth remains largely independent. These findings complement the time-series results by showing that although short-term growth fluctuates sharply during COVID-19, long-run development indicators remain tightly connected.
