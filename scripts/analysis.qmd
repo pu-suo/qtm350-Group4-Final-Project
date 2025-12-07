@@ -92,8 +92,73 @@ Italy consistently maintains the lowest employment ratio. While the COVID-19 cri
 
 In contrast, Ukraine's path deviates significantly from the broader recovery pattern. Following its 2020 decline, its employment ratio continued to fall after 2021 due to the ongoing conflict. This decline reflects large-scale population displacement, widespread economic disruption, and severe demographic shocks. Collectively, the data illustrate that while most European nations had recovered from the COVID-19 impact by 2022 or 2023, Ukraine's situation underscores the profound and protracted effects of conflict on labor markets and overall economic stability.
 
+## Number of children out of (Primary) School
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+# Load the data from the 'data' folder
+try:
+    df = pd.read_csv('../data/cleaned_wb_data.csv')
+except FileNotFoundError:
+    print("FATAL ERROR: Data file not found; please ensure 'cleaned_wb_data.csv' is in the 'data/' folder.")
+    exit()
+
+df['year'] = df['year'].astype(int)
+df_clean = df.dropna(subset=['children_out_of_school_primary']).copy()
+
+sns.set_style("whitegrid")
+plt.figure(figsize=(12, 7))
+
+# Generate Plot
+for country in df_clean['country_name'].unique():
+    country_data = df_clean[df_clean['country_name'] == country]
+    
+    plt.plot(
+        country_data['year'],
+        country_data['children_out_of_school_primary'],
+        marker='o',
+        linestyle='-',
+        label=country
+    )
+
+# Add COVID-19 Line
+plt.axvline(
+    x=2020,
+    color='r',
+    linestyle='--',
+    linewidth=1.5,
+    label='Start of COVID-19 (2020)'
+)
+
+plt.title(
+    'Children Out of School (Primary) Trends Across Selected European Countries, 2017-2023',
+    fontsize=16
+)
+plt.xlabel('Year', fontsize=12)
+plt.ylabel('Children Out of School, Primary (SE.PRM.UNER)', fontsize=12)
+
+plt.legend(title='Country', loc='upper right')
+
+plt.grid(True, linestyle=':', alpha=0.6)
+plt.xticks(np.arange(df['year'].min(), df['year'].max() + 1, 1))
+plt.ticklabel_format(style='plain', axis='y')
 
 
+plt.savefig('../figures/children_out_of_school_analysis.png')
+plt.show()
+```
+
+The graph highlights highly divergent trajectories across the six countries following the COVID-19 onset in 2020; the pandemic acted more as a stress test than a uniform shock to education systems. Due to Ukraine’s large baseline number, the trends of the other five nations are heavily compressed, emphasizing the scale differences.
+
+Albania and Italy demonstrated a concerning increase in the out-of-school number following 2020. Albania's number surged from 3,575 in 2019 to over 17,000 by 2023. Italy, which consistently has the highest non-Ukraine value, peaked significantly in 2022, suggesting that pandemic-related disruptions exacerbated structural weaknesses in retention or access in both countries.
+
+The United Kingdom and Portugal both showed a clear decline in the out-of-school population that began before 2020, reaching their lowest levels around 2020-2021. This trajectory indicates that strong pre-existing enrollment policies maintained their effectiveness, showing high resilience to the crisis. Norway similarly maintained a stable and very low number throughout the entire period, reflecting a robust education system.
+
+Ukraine maintained a high number of children out of school through 2021. The lack of data for 2022 and 2023, coupled with the known effects of conflict on population and labor markets, strongly suggests a severe and protracted deterioration in educational access beyond the scope of the pandemic alone.
 
 ## Correlation Analysis of Key Economic Indicators
 ```{python}
