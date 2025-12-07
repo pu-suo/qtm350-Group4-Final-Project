@@ -95,17 +95,7 @@ In contrast, Ukraine's path deviates significantly from the broader recovery pat
 ## Number of children out of (Primary) School
 
 ```{python}
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
-
-# Load the data from the 'data' folder
-try:
-    df = pd.read_csv('../data/cleaned_wb_data.csv')
-except FileNotFoundError:
-    print("FATAL ERROR: Data file not found; please ensure 'cleaned_wb_data.csv' is in the 'data/' folder.")
-    exit()
 
 df['year'] = df['year'].astype(int)
 df_clean = df.dropna(subset=['children_out_of_school_primary']).copy()
