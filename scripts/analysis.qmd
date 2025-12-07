@@ -18,8 +18,7 @@ The global economy experienced one of the most significant disturbances in moder
 
 The project examines the economic inidcators of six selected European countries: Portugal, the United Kingdom, Norway, Albania, Ukraine, and Italy. The countries were selected because they offer a diverse perspective of the European economic sphere. Norway and UK represent well established economies with higher income that have developed financial resources. Italy and Portugal represents southern European economies with varying levels of debt and labor market dynamics. Contrastingly Albania and Ukraine represent economies that are still undergoing development with unique challenges, with Ukraine further affected by the Russian invasion during the 2022 period that further complicates the recovery process from Covid 19.
 
-
-# Data Description
+## Data Description:
 
 We utilize data from World Bank’s World Development Indicators (WDI) database to conduct this analysis. We specifically focus on three major economic indicators to serve as proxies for the health of the nation's economy: GDP per capita (constant 2015 US$), GDP growth (annual %), Employment to population ratio (15+, total %):
 
@@ -43,15 +42,58 @@ Consequently, this project addresses the following research questions: How have 
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import numpy as np
 
 df = pd.read_csv('../data/cleaned_wb_data.csv')
 
 df.head()
 ```
 
+## GDP per capita
+```{python}
+plt.figure(figsize=(12, 6))
+
+for country in df["country_name"].unique():
+    sub = df[df["country_name"] == country]
+    plt.plot(sub["year"], sub["gdp_pc"], marker="o", label=country)
+
+plt.xlabel("Year")
+plt.ylabel("GDP per capita (constant 2015 US$)")
+plt.title("GDP per Capita Trends (2017-2023)")
+plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
+
+# Mark major events
+plt.axvline(
+    x=2020,
+    color='r',
+    linestyle='--',
+    linewidth=1.5,
+    label='COVID-19 Pandemic (2020)'
+)
+plt.axvline(
+    x=2022,
+    color='black',
+    linestyle=':',
+    linewidth=1.5,
+    label='Invasion of Ukraine (2022)'
+)
+
+plt.grid(True)
+plt.tight_layout()
+plt.savefig('../figures/gdp_per_capita.png')
+plt.show()
+```
+
+The GDP per capita trends reveal a distinct tripartite economic stratification among the selected countries, where the magnitude of global shocks is visually relative to the baseline wealth of the nation.
+
+High-Income Stability: Norway and the United Kingdom occupy the upper tier of the analysis. Norway exhibits exceptional stability; the 2020 pandemic shock appears as a minor fluctuation against its high baseline wealth (approx. $75k–$80k), followed by a return to gradual growth. The United Kingdom displays a clearer "V-shaped" impact in 2020, dropping toward $42k before recovering. However, the UK's trajectory notably flattens post-2022, suggesting a slowing of momentum in the post-pandemic recovery phase compared to Norway's steady rise.
+
+Southern European Parallelism: Italy and Portugal follow strikingly parallel paths in the middle-income band. Both nations show clear, synchronized contractions in 2020—likely driven by the vulnerability of their service and tourism-oriented sectors to lockdowns. Their recovery from 2021 to 2023 has been consistent and positive, with both lines trending upward in unison, though neither shows signs of aggressive expansion beyond pre-pandemic trends.
+
+Emerging Economies and Divergence: The most critical insight lies in the lower income band (below $10k), where the scale of the graph compresses the visual volatility. Both Albania and Ukraine begin with similar baselines and flat trajectories pre-2020. However, a significant divergence occurs at the 2022 mark. While Albania continues a slow but steady upward "catch-up" trend, Ukraine's trajectory decouples, flattening and dipping slightly. While the absolute drop appears small due to the Y-axis scale being stretched by Norway's wealth, this stagnation represents a profound economic deviation caused by the 2022 invasion, effectively halting the development momentum seen in its peer, Albania.
+
 ## Labor Market Participation 
 ```{python}
-
 plt.figure()
 plt.figure(figsize=(12,6))
 
@@ -76,8 +118,6 @@ plt.grid(True)
 plt.tight_layout()
 plt.savefig('../figures/employment_ratio.png')
 plt.show()
-
-
 ```
 
 This graph shows a uniform COVID-19 shock across these six countries in 2020, followed by divergent recovery trajectories. The general drop in 2020 indicates a disruption to all the labor markets; however, the speed and robustness of the subsequent recovery varied considerably.
@@ -95,8 +135,6 @@ In contrast, Ukraine's path deviates significantly from the broader recovery pat
 ## Number of children out of (Primary) School
 
 ```{python}
-import numpy as np
-
 df['year'] = df['year'].astype(int)
 df_clean = df.dropna(subset=['children_out_of_school_primary']).copy()
 
