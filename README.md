@@ -11,10 +11,10 @@ A correlation matrix is also constructed to evaluate how these variables relate 
 `python scripts/data_cleaning.py`
 
 **2. Generate figures and tables**  
-`python scripts/analysis_plots.py`
+`python scripts/
 
 **3. Render the final report**  
-`quarto render report/final_report.qmd`
+`quarto render report/analysis.qmd`
 
 ## **Data Source**
 
@@ -30,4 +30,5 @@ SE.PRM.UNER.ZS — Children out of school, primary (% of primary school age)
 
 The dataset is restricted to:
 Portugal, the United Kingdom, Norway, Albania, Ukraine, and Italy.
+
 
