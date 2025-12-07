@@ -63,8 +63,18 @@ plt.xlabel("Year")
 plt.ylabel("Employment Ratio (%)")
 plt.title("Employment Ratio Change Over the Years")
 plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
+
+plt.axvline(
+    x=2020,
+    color='r',
+    linestyle='--',
+    linewidth=1.5,
+    label='Start of COVID-19 (2020)'
+)
+
 plt.grid(True)
 plt.tight_layout()
+plt.savefig('../figures/employment_ratio.png')
 plt.show()
 
 
