@@ -189,58 +189,61 @@ A uniform COVID-19 shock hit six countries' labor markets in 2020, followed by v
 ## Number of children out of (Primary) School
 
 ```{python}
+#| label: children-out-of-school-small-multiples
+#| warning: false
+
 df['year'] = df['year'].astype(int)
 df_clean = df.dropna(subset=['children_out_of_school_primary']).copy()
 
-sns.set_style("whitegrid")
-plt.figure(figsize=(12, 7))
+countries = df_clean['country_name'].unique()
+n_rows = 2
+n_cols = 3
+fig, axes = plt.subplots(n_rows, n_cols, figsize=(15, 10), sharex=True)
+axes = axes.flatten()
 
-# Generate Plot
-for country in df_clean['country_name'].unique():
-    country_data = df_clean[df_clean['country_name'] == country]
+for i, country in enumerate(countries):
+    ax = axes[i]
+    country_data = df_clean[df_clean['country_name'] == country].reset_index(drop=True)
     
-    plt.plot(
-        country_data['year'],
-        country_data['children_out_of_school_primary'],
-        marker='o',
-        linestyle='-',
-        label=country
+    colors = []
+    for year in country_data['year']:
+        if year >= 2020:
+            colors.append('red')
+        else:
+            colors.append('steelblue')
+
+    sns.barplot(
+        x='year',
+        y='children_out_of_school_primary',
+        data=country_data,
+        ax=ax,
+        palette=colors
     )
+        
+    ax.set_title(country, fontsize=14)
+    ax.set_xlabel('Year', fontsize=10)
+    ax.set_ylabel('Absolute Count', fontsize=10)
+    ax.ticklabel_format(style='plain', axis='y', useOffset=False)
+    ax.grid(axis='y', linestyle=':', alpha=0.7)
 
-# Add COVID-19 Line
-plt.axvline(
-    x=2020,
-    color='r',
-    linestyle='--',
-    linewidth=1.5,
-    label='Start of COVID-19 (2020)'
-)
+if len(countries) < n_rows * n_cols:
+    for i in range(len(countries), n_rows * n_cols):
+        fig.delaxes(axes[i])
 
-plt.title(
-    'Children Out of School (Primary) Trends Across Selected European Countries, 2017-2023',
-    fontsize=16
-)
-plt.xlabel('Year', fontsize=12)
-plt.ylabel('Children Out of School, Primary (SE.PRM.UNER)', fontsize=12)
-
-plt.legend(title='Country', loc='upper right')
-
-plt.grid(True, linestyle=':', alpha=0.6)
-plt.xticks(np.arange(df['year'].min(), df['year'].max() + 1, 1))
-plt.ticklabel_format(style='plain', axis='y')
-
+fig.suptitle('Children Out of School (Primary) Trends by Country (Absolute Count)', fontsize=18, y=1.02)
+plt.tight_layout(rect=[0, 0, 1, 0.98])
 
 plt.savefig('../figures/children_out_of_school_analysis.png')
 plt.show()
 ```
 
-The graph highlights highly divergent trajectories across the six countries following the COVID-19 onset in 2020; the pandemic acted more as a stress test than a uniform shock to education systems. Due to Ukraine’s large baseline number, the trends of the other five nations are heavily compressed, emphasizing the scale differences.
+The grid of bar charts reveals the different trends in the out-of-school number for each country, emphasizing that the post-2020 period [highlighted in red] varied for each country. The pandemic acted more as a stress test than an actual shock to European education systems. 
 
-Albania and Italy demonstrated a concerning increase in the out-of-school number following 2020. Albania's number surged from 3,575 in 2019 to over 17,000 by 2023. Italy, which consistently has the highest non-Ukraine value, peaked significantly in 2022, suggesting that pandemic-related disruptions exacerbated structural weaknesses in retention or access in both countries.
+Albania and Italy demonstrated an increase in the out-of-school number following 2020. This rise is clearly visible in the increasing height of the red bars (2020–2023). Albania's number increased from 3,575 in 2019 to over 17,000 by 2023. Italy, which was originally the second-highest after Ukraine, peaked in 2022, suggesting that pandemic-related disruptions surpassed structural weaknesses in retention in both countries. 
 
-The United Kingdom and Portugal both showed a clear decline in the out-of-school population that began before 2020, reaching their lowest levels around 2020-2021. This trajectory indicates that strong pre-existing enrollment policies maintained their effectiveness, showing high resilience to the crisis. Norway similarly maintained a stable and very low number throughout the entire period, reflecting a robust education system.
+The United Kingdom and Portugal both showed a clear decline in the out-of-school population that began before 2020, reaching their lowest levels around 2020-2021. This trajectory indicates that strong pre-existing enrollment policies maintained their effectiveness, showing high resilience to the crisis. Norway similarly maintained a stable and very low number throughout the entire period, reflecting an equally effective education system. 
 
-Ukraine maintained a high number of children out of school through 2021. The lack of data for 2022 and 2023, coupled with the known effects of conflict on population and labor markets, strongly suggests a severe and protracted deterioration in educational access beyond the scope of the pandemic alone.
+Ukraine maintained a high number of children out of school through 2021. The lack of data for 2022 and 2023, along with the known effects of conflict on population and labor markets, suggests a severe deterioration in educational access beyond the scope of the pandemic alone. 
 
 ## Correlation Analysis of Key Economic Indicators
 
@@ -293,12 +296,12 @@ Overall, the correlation results reveal a clear structural linkage between econo
 
 # Results
 
-Between 2017 and 2023, the selected European economies demonstrated a three-tiered response to major shocks, stratified by existing wealth and structural characteristics. Norway and the United Kingdom, representing high-income economies, exhibited stability and rapid recovery; Norway’s GDP per capita (\$75k–\$80k range) showed only a minor fluctuation in 2020, and its employment ratio quickly surpassed pre-pandemic levels by 2022. Italy and Portugal, occupying the middle-income band, experienced synchronized contractions in GDP per capita and GDP growth in 2020, followed by consistent, moderate recovery through 2023. Albania and Ukraine, the emerging economies, displayed the greatest divergence, with Albania demonstrating a strong employment resurgence but Italy showing a significant post-2020 rise in out-of-school children, indicating uneven socioeconomic impacts. The GDP Growth analysis confirmed a deep, synchronized drop for all nations in 2020, with Italy and the UK hit hardest. The correlation matrix quantifies structural links: GDP per capita correlates positively with employment ratio, +0.65, and both correlate negatively with children out of school, –0.45 and –0.35, respectively.
+Between 2017 and 2023, the selected European economies demonstrated a three-tiered response to major shocks, exemplified by wealth, labor, and educational characteristics. Norway and the United Kingdom, representing high-income economies, demonstrated a stable and rapid recovery; Norway's GDP per capita ($75k–$80k range) showed only a minor fluctuation in 2020, and its employment ratio quickly surpassed pre-pandemic levels by 2022. Italy and Portugal, occupying the middle-income band, experienced similar contractions in GDP per capita and GDP growth in 2020, followed by a moderate recovery through 2023. Albania and Ukraine, the emerging economies, displayed the greatest differences. While Albania demonstrated a strong employment resurgence, Ukraine's employment saw a large dip due to the news of the incoming 2022 invasion. The GDP Growth analysis confirmed a connected drop for all nations in 2020, with Italy and the UK hit hardest. The correlation matrix quantifies links between all 4 variables: GDP per capita correlates positively with employment ratio, +0.65, and both correlate negatively with children out of school, –0.45 and –0.35.
 
 # Discussion
 
-These patterns emphasize that the COVID-19 pandemic served primarily as an economic stress test, exposing structural vulnerabilities rather than imposing a uniform shock. Advanced economies (Norway, UK) leveraged financial resources and robust labor markets to rapidly absorb the shock, demonstrating that high-baseline wealth translates directly into economic resilience. Southern European nations (Italy, Portugal) faced greater initial contraction due to their service-oriented economies, yet their synchronized recovery confirms shared regional dynamics and policy successes in reabsorbing labor. The most telling divergence is between the emerging economies; while Albania showed resilience in its labor market, the simultaneous increase in children out of school suggests that rapid economic recovery alone is insufficient to guarantee overall socioeconomic stability. Furthermore, external geopolitical events completely overwhelm economic trends; Ukraine’s trajectory decoupled entirely in 2022, confirming that conflict is a far greater structural disruptor than the pandemic. Although the correlation analysis suggests a strong linkage between long-term development, GDP per capita, and labor strength, it also shows that short-term GDP growth is weak and volatile, easily influenced by temporary crises and policy responses.
+These patterns emphasize that the COVID-19 pandemic served primarily as an economic stress test, exposing structural vulnerabilities rather than imposing a uniform shock. Advanced economies (Norway, UK) leveraged financial resources and robust labor markets to rapidly absorb the shock, demonstrating that high-baseline wealth translates directly into economic resilience. Southern European nations (Italy, Portugal) faced greater initial contraction due to their service-oriented economies, yet their synchronized recovery confirms shared regional dynamics and policy successes in reabsorbing labor. The most telling divergence is between the emerging economies; while Albania showed resilience in its labor market, the simultaneous increase in children out of school suggests that rapid economic recovery alone is insufficient to guarantee overall socioeconomic stability. This further demonstrates that external geopolitical events completely overwhelm economic trends; Ukraine’s trajectory decoupled entirely in 2022, confirming that conflict is a far greater structural disruptor than the pandemic. Although the correlation analysis suggests a strong linkage between long-term development, GDP per capita, and labor strength, it also shows that short-term GDP growth is weak and volatile, easily influenced by temporary crises and policy responses. 
 
 # Conclusion
 
-Sustaining economic stability through global disruptions requires structural resilience, not merely volatile growth. Our findings confirm that advanced economies, characterized by high GDP per capita and strong labor markets, possess the necessary capital and policy infrastructure to rapidly recover from global shocks. However, this study also highlights a critical vulnerability: while recovery in GDP and employment was widespread, the socioeconomic health of nations, measured by educational access, remains inconsistent. The negative correlation between income and out-of-school children confirms that development progress is holistic; therefore, future policy interventions must be designed not just to boost GDP, but to shield vulnerable populations and social institutions, like education, to ensure that economic resilience is shared and sustained across all layers of society. The experience of Ukraine provides a final, stark reminder that stable development is fundamentally dependent on geopolitical stability, an essential prerequisite that dwarfs the economic effects of all other crises.
+Sustaining economic stability through global disruptions such as a pandemic requires a strong structural backbone, not merely volatile growth. Our findings confirm that advanced economies, characterized by high GDP per capita and strong labor markets, possess the necessary capital and policy infrastructure to rapidly recover from global shocks. However, this study also highlights a prominent issue. While recovery in GDP and employment was relatively similar for all countries, the socioeconomic health of nations, measured by educational access, remains inconsistent. The negative correlation between income and out-of-school children confirms that development progress is interconnected; therefore, future policy interventions must be designed not just to boost GDP, but to protect vulnerable populations and social institutions, like education, so that economic resilience is shared and sustained across all layers of society. The experience of Ukraine provides a final reminder that stable development is fundamentally dependent on geopolitical stability, an essential indicator in contrast to the economic effects of all other crises.
