@@ -8,6 +8,7 @@ format:
     geometry: "left=2cm,right=2cm,top=2cm,bottom=2cm"
 execute:
   kernel: python3
+  echo: false
 ---
 
 
@@ -191,7 +192,6 @@ Ukraine maintained a high number of children out of school through 2021. The lac
 ## Correlation Analysis of Key Economic Indicators
 ```{python}
 #| label: correlation-matrix
-#| echo: true
 
 # Select variables for correlation analysis
 corr_vars = df[[
@@ -216,6 +216,7 @@ sns.heatmap(
 
 plt.title("Correlation Matrix of Key Economic Indicators")
 plt.tight_layout()
+plt.savefig('../figures/Correlation Matrix of Key Economic Indicators.png')
 plt.show()
 ```
 
