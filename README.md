@@ -11,7 +11,7 @@ A correlation matrix is also constructed to evaluate how these variables relate 
 `python scripts/data_cleaning.py`
 
 **2. Generate figures and tables**  
-`python scripts/
+`python scripts/analysis.qmd`
 
 **3. Render the final report**  
 `quarto render report/analysis.qmd`

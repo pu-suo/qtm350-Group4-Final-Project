@@ -1,6 +1,11 @@
 ---
 title: "Economic Analysis of European Countries"
-author: "Group 4: Tom Suo 2549787, Lucy Liu 2561533, Leo Xu 2592825, Mike Wu 2549432, Santiago Vazquez 2592291"
+author:
+  - "Tom Suo 2549787"
+  - "Lucy Liu 2561533"
+  - "Leo Xu 2592825"
+  - "Mike Wu 2549432"
+  - "Santiago Vazquez 2592291"
 format:
   html:
     code-fold: true
@@ -11,32 +16,32 @@ execute:
   echo: false
 ---
 
-
 # Introduction
 
-## Context:
-The global economy experienced one of the most significant disturbances in modern history during the 2020 Covid 19 pandemic. Prior to this disruption, Europe overall had relatively predictable economic development defined by gradual increase that stayed overall constant. However, the pandemic forced major economic activities to come to a halt with supply chain breakdowns resulting in the government having to intervene in the labor market to prevent total economic colapse. As we move into the post pandemic era, the pandemic has presented a unique opportunity to investigate how economies of vastly different scale and structure, ranging from established G7 powers to developing transition economies, absorbs shock and regains momentum during major disruptions. 
+The global economy experienced one of the most significant disturbances in modern history during the 2020 Covid 19 pandemic. Prior to this disruption, Europe overall had relatively predictable economic development defined by gradual increase that stayed overall constant. However, the pandemic forced major economic activities to come to a halt with supply chain breakdowns resulting in the government having to intervene in the labor market to prevent total economic colapse. As we move into the post pandemic era, the pandemic has presented a unique opportunity to investigate how economies of vastly different scale and structure, ranging from established G7 powers to developing transition economies, absorbs shock and regains momentum during major disruptions.
 
-The project examines the economic inidcators of six selected European countries: Portugal, the United Kingdom, Norway, Albania, Ukraine, and Italy. The countries were selected because they offer a diverse perspective of the European economic sphere. Norway and UK represent well established economies with higher income that have developed financial resources. Italy and Portugal represents southern European economies with varying levels of debt and labor market dynamics. Contrastingly Albania and Ukraine represent economies that are still undergoing development with unique challenges, with Ukraine further affected by the Russian invasion during the 2022 period that further complicates the recovery process from Covid 19.
+The project examines the economic indicators of six selected European countries: Portugal, the United Kingdom, Norway, Albania, Ukraine, and Italy. The countries were selected because they offer a diverse perspective of the European economic sphere. Norway and UK represent well established economies with higher income that have developed financial resources. Italy and Portugal represents southern European economies with varying levels of debt and labor market dynamics. Contrastingly Albania and Ukraine represent economies that are still undergoing development with unique challenges, with Ukraine further affected by the Russian invasion during the 2022 period that further complicates the recovery process from Covid 19.
 
 ## Data Description:
 
-We utilize data from World Bank’s World Development Indicators (WDI) database to conduct this analysis. We specifically focus on three major economic indicators to serve as proxies for the health of the nation's economy: GDP per capita (constant 2015 US$), GDP growth (annual %), Employment to population ratio (15+, total %):
+We utilize data from World Bank’s World Development Indicators (WDI) database to conduct this analysis. We specifically focus on three major economic indicators to serve as proxies for the health of the nation's economy: GDP per capita (constant 2015 US\$), GDP growth (annual %), Employment to population ratio (15+, total %):
 
-* GDP per capita (constant 2015 US$): This metric provides a view of individual economic wellbeing adjusted for inflation, allowing for accurate comparisons of wealth over time.
-* GDP growth (annual %): This indicator measures the rate at which the economy is expanding or contracting showing us the rate at which the economy is being impacted or recovering.
-* Employment to population ratio (15+, total %): This variable offers insight into the labor market's ability to utilize its available human resources. This is especially a critical factor during the pandemic when lockdowns forced mass unemployment.
+-   GDP per capita (constant 2015 US\$): This metric provides a view of individual economic wellbeing adjusted for inflation, allowing for accurate comparisons of wealth over time.
+-   GDP growth (annual %): This indicator measures the rate at which the economy is expanding or contracting showing us the rate at which the economy is being impacted or recovering.
+-   Employment to population ratio (15+, total %): This variable offers insight into the labor market's ability to utilize its available human resources. This is especially a critical factor during the pandemic when lock-downs forced mass unemployment.
 
-In addition to these major economic indicators we have also included a secondary inidcator: rate of primary school children out of school. Including this inidcator will provide a secondary dimension into the socioeconomic stability of the nations. The dataset we selected spans an eight year period from 2017 to 2024 giving us a comprehensive comparison of the pre covid baseline (2017-2019), the disruption year (2020), and the recovery period (2021-2024).
+In addition to these major economic indicators we have also included a secondary indicator: rate of primary school children out of school. Including this indicator will provide a secondary dimension into the socioeconomic stability of the nations. The dataset we selected spans an eight year period from 2017 to 2024 giving us a comprehensive comparison of the precovid baseline (2017-2019), the disruption year (2020), and the recovery period (2021-2024).
 
 ## Research Objectives:
 
-The primary objective of this analysis is to quantify the magnitude of the pandemic's impact and the differing recovery speeds among these European countries. 
+The primary objective of this analysis is to quantify the magnitude of the pandemic's impact and the differing recovery speeds among these European countries.
 
 Consequently, this project addresses the following research questions: How have GDP per capita, employment-to-population ratios, and GDP growth trends changed before and after COVID-19 across selected European countries, and what do these trends reveal about their economic development trajectories? Furthermore, which indicators are the most correlated with each other? Through time-series visualization and correlation analysis, this report seeks to map the economic scarring left by the pandemic and the varying paths toward recovery.
 
-
 # Data Analysis
+
+## Summary of Key Variables
+
 ```{python}
 #| label: load-data
 #| echo: false
@@ -44,15 +49,30 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
-
+import sqlite3
 df = pd.read_csv('../data/cleaned_wb_data.csv')
+conn = sqlite3.connect(':memory:')    
+df.to_sql('world_bank_raw', conn, index=False, if_exists='replace')
+stats_query = """
+SELECT 
+    country_name AS Country,
+    ROUND(AVG("gdp_pc"), 2) AS Ave_GDP_PC,
+    ROUND(MAX("gdp_growth"), 2) AS Max_GDP_Growth,
+    ROUND(AVG("emp_ratio"), 2) AS Ave_Employ_Ratio,
+    ROUND(AVG("children_out_of_school_primary"), 2) AS Ave_Children_OutofSchool
+FROM world_bank_raw
+GROUP BY Country
+ORDER BY Ave_GDP_PC DESC;
+"""
+df_stats = pd.read_sql(stats_query, conn)
+display(df_stats)
 
-df.head()
 ```
 
 ## GDP per capita
+
 ```{python}
-plt.figure(figsize=(12, 6))
+plt.figure(figsize=(10, 6))
 
 for country in df["country_name"].unique():
     sub = df[df["country_name"] == country]
@@ -87,57 +107,17 @@ plt.show()
 
 The GDP per capita trends reveal a distinct tripartite economic stratification among the selected countries, where the magnitude of global shocks is visually relative to the baseline wealth of the nation.
 
-High-Income Stability: Norway and the United Kingdom occupy the upper tier of the analysis. Norway exhibits exceptional stability; the 2020 pandemic shock appears as a minor fluctuation against its high baseline wealth (approx. $75k–$80k), followed by a return to gradual growth. The United Kingdom displays a clearer "V-shaped" impact in 2020, dropping toward $42k before recovering. However, the UK's trajectory notably flattens post-2022, suggesting a slowing of momentum in the post-pandemic recovery phase compared to Norway's steady rise.
+High-Income Stability: Norway and the United Kingdom occupy the upper tier of the analysis. Norway exhibits exceptional stability; the 2020 pandemic shock appears as a minor fluctuation against its high baseline wealth (approx. \$75k–\$80k), followed by a return to gradual growth. The United Kingdom displays a clearer "V-shaped" impact in 2020, dropping toward \$42k before recovering. However, the UK's trajectory notably flattens post-2022, suggesting a slowing of momentum in the post-pandemic recovery phase compared to Norway's steady rise.
 
 Southern European Parallelism: Italy and Portugal follow strikingly parallel paths in the middle-income band. Both nations show clear, synchronized contractions in 2020—likely driven by the vulnerability of their service and tourism-oriented sectors to lockdowns. Their recovery from 2021 to 2023 has been consistent and positive, with both lines trending upward in unison, though neither shows signs of aggressive expansion beyond pre-pandemic trends.
 
-Emerging Economies and Divergence: The most critical insight lies in the lower income band (below $10k), where the scale of the graph compresses the visual volatility. Both Albania and Ukraine begin with similar baselines and flat trajectories pre-2020. However, a significant divergence occurs at the 2022 mark. While Albania continues a slow but steady upward "catch-up" trend, Ukraine's trajectory decouples, flattening and dipping slightly. While the absolute drop appears small due to the Y-axis scale being stretched by Norway's wealth, this stagnation represents a profound economic deviation caused by the 2022 invasion, effectively halting the development momentum seen in its peer, Albania.
-
-## Labor Market Participation 
-```{python}
-plt.figure()
-plt.figure(figsize=(12,6))
-
-for country in df["country_name"].unique():
-    sub = df[df["country_name"] == country]
-    plt.plot(sub["year"], sub["emp_ratio"], marker="o", label=country)
-
-plt.xlabel("Year")
-plt.ylabel("Employment Ratio (%)")
-plt.title("Employment Ratio Change Over the Years")
-plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
-
-plt.axvline(
-    x=2020,
-    color='r',
-    linestyle='--',
-    linewidth=1.5,
-    label='Start of COVID-19 (2020)'
-)
-
-plt.grid(True)
-plt.tight_layout()
-plt.savefig('../figures/employment_ratio.png')
-plt.show()
-```
-
-This graph shows a uniform COVID-19 shock across these six countries in 2020, followed by divergent recovery trajectories. The general drop in 2020 indicates a disruption to all the labor markets; however, the speed and robustness of the subsequent recovery varied considerably.
-
-Norway shows the most resilient pattern: following a marginal decrease in 2020, its employment ratio rapidly rebounded, passing pre-pandemic levels by 2022. This performance indicates a robust labor market and successful economic stabilization policies.
-
-The UK also recovered, albeit at a slower pace, stabilizing slightly below its 2019 peak. This suggests the persistence of post-pandemic labor shortages and structural economic adjustments. Portugal experienced a notable contraction in 2020 but showed a consistent recovery through 2023, reflecting the gradual reabsorption of workers as the tourism and services sectors reopened.
-
-Albania endured a sharper pandemic-era decline than its Western European counterparts but subsequently demonstrated a powerful resurgence, surpassing its pre-COVID levels by 2022. This trajectory may be attributed to enhanced labor participation or rapid recovery in key domestic industries.
-
-Italy consistently maintains the lowest employment ratio. While the COVID-19 crisis exacerbated its underlying structural weaknesses, the nation has registered a modest upward trend since 2021. This improvement, while discernible, remains constrained by long-standing challenges, particularly low rates of female and youth employment.
-
-In contrast, Ukraine's path deviates significantly from the broader recovery pattern. Following its 2020 decline, its employment ratio continued to fall after 2021 due to the ongoing conflict. This decline reflects large-scale population displacement, widespread economic disruption, and severe demographic shocks. Collectively, the data illustrate that while most European nations had recovered from the COVID-19 impact by 2022 or 2023, Ukraine's situation underscores the profound and protracted effects of conflict on labor markets and overall economic stability.
+Emerging Economies and Divergence: The most critical insight lies in the lower income band (below \$10k), where the scale of the graph compresses the visual volatility. Both Albania and Ukraine begin with similar baselines and flat trajectories pre-2020. However, a significant divergence occurs at the 2022 mark. While Albania continues a slow but steady upward "catch-up" trend, Ukraine's trajectory decouples, flattening and dipping slightly. While the absolute drop appears small due to the Y-axis scale being stretched by Norway's wealth, this stagnation represents a profound economic deviation caused by the 2022 invasion, effectively halting the development momentum seen in its peer, Albania.
 
 ## GDP Growth Overtime
 
 ```{python}
 
-plt.figure(figsize=(12, 6))
+plt.figure(figsize=(10, 6))
 
 
 countries_to_plot = ["Albania", "United Kingdom", "Italy", "Norway", "Portugal"]
@@ -178,11 +158,33 @@ plt.show()
 
 ```
 
-The GDP growth patterns across the five countries show stable and moderate expansion from 2017 to 2019, with most countries growing between 1 to 4 percent. Norway and Portugal performed slightly better than the others during this period, while Italy and the United Kingdom exhibited slower but still positive growth. Overall, the pre pandemic years reflect steady macroeconomic conditions, market strength, and  no drastic disruptions.
+The GDP growth patterns across the five countries show stable and moderate expansion from 2017 to 2019, with most countries growing between 1 to 4 percent. Norway and Portugal performed slightly better than the others during this period, while Italy and the United Kingdom exhibited slower but still positive growth. Overall, the pre pandemic years reflect steady macroeconomic conditions, market strength, and no drastic disruptions.
 
 A clear structural break appears in 2020 with the onset of COVID-19. All countries experienced sharp contractions, though the severity differed. The United Kingdom and Italy were hit the hardest, dropping to around negative 10 percent and negative 8 percent. Albania, Portugal, and Norway also declined substantially. This synchronized downturn aligns with the global shock from lockdowns, collapsing demand, and widespread economic restrictions.
 
 Growth rebounded strongly in 2021, with Albania, Italy, and Portugal showing the fastest recovery pace, reaching growth rates above 7 percent. Norway and the United Kingdom also recovered but more moderately. By 2022 and 2023, all countries returned to more stable levels of growth, though differences in recovery speed reflect structural economic differences and policy responses. Overall, the graph highlights the sharp COVID shock followed by an uneven but significant rebound across all five countries.
+
+## Labor Market Participation
+
+```{python}
+countries = df["country_name"].unique()
+fig, axes = plt.subplots(2, 3, figsize=(14,8), sharey=True, sharex=True)
+axes = axes.flatten()
+
+for ax, c in zip(axes, countries):
+    sub = df[df["country_name"] == c]
+    ax.plot(sub["year"], sub["emp_ratio"], marker="o")
+    ax.axvline(2020, color="red", linestyle="--", linewidth=1)
+    ax.set_title(c)
+    ax.grid(True)
+
+fig.suptitle("Employment Ratio Over the Years by Country", fontsize=16)
+plt.tight_layout()
+plt.savefig('../figures/employment_ratio_facet.png', dpi=300)
+plt.show()
+```
+
+A uniform COVID-19 shock hit six countries' labor markets in 2020, followed by varied recoveries. Norway showed the most resilience, quickly surpassing pre-pandemic employment levels by 2022 due to a robust labor market and effective policies. The UK recovered more slowly, stabilizing below its 2019 peak, suggesting persistent labor shortages. Portugal rebounded consistently after a 2020 contraction as tourism and services reopened. Albania saw a sharper initial decline but a powerful resurgence, exceeding pre-COVID levels by 2022, possibly due to increased labor participation. Italy maintains the lowest employment ratio, while showing a modest upward trend since 2021. Structural weaknesses, especially low female and youth employment, constrain improvement. In contrast, Ukraine's employment ratio continued to fall post-2021 due to the ongoing conflict, resulting in population displacement and severe economic disruption.
 
 ## Number of children out of (Primary) School
 
@@ -241,10 +243,18 @@ The United Kingdom and Portugal both showed a clear decline in the out-of-school
 Ukraine maintained a high number of children out of school through 2021. The lack of data for 2022 and 2023, coupled with the known effects of conflict on population and labor markets, strongly suggests a severe and protracted deterioration in educational access beyond the scope of the pandemic alone.
 
 ## Correlation Analysis of Key Economic Indicators
+
 ```{python}
 #| label: correlation-matrix
 
 # Select variables for correlation analysis
+label_map = {
+    "gdp_pc": "GDP PC",
+    "gdp_growth": "GDP Gr.",
+    "emp_ratio": "Emp. Ratio",
+    "children_out_of_school_primary": "Out-of-School"
+}
+
 corr_vars = df[[
     "gdp_pc",
     "gdp_growth",
@@ -256,18 +266,20 @@ corr_vars = df[[
 corr_matrix = corr_vars.corr()
 
 # Plot correlation heatmap
-plt.figure(figsize=(8,6))
+plt.figure(figsize=(6,5))
 sns.heatmap(
     corr_matrix,
     annot=True,
     fmt=".2f",
     cmap="coolwarm",
-    square=True
+    square=True,
+    xticklabels=[label_map[col] for col in corr_matrix.columns],
+    yticklabels=[label_map[col] for col in corr_matrix.index]
 )
 
-plt.title("Correlation Matrix of Key Economic Indicators")
+plt.title("Correlation Matrix of Key Indicators")
 plt.tight_layout()
-plt.savefig('../figures/Correlation Matrix of Key Economic Indicators.png')
+plt.savefig('../figures/correlation_matrix.png')
 plt.show()
 ```
 
@@ -281,7 +293,7 @@ Overall, the correlation results reveal a clear structural linkage between econo
 
 # Results
 
-Between 2017 and 2023, the selected European economies demonstrated a three-tiered response to major shocks, stratified by existing wealth and structural characteristics. Norway and the United Kingdom, representing high-income economies, exhibited stability and rapid recovery; Norway’s GDP per capita ($75k–$80k range) showed only a minor fluctuation in 2020, and its employment ratio quickly surpassed pre-pandemic levels by 2022. Italy and Portugal, occupying the middle-income band, experienced synchronized contractions in GDP per capita and GDP growth in 2020, followed by consistent, moderate recovery through 2023. Albania and Ukraine, the emerging economies, displayed the greatest divergence, with Albania demonstrating a strong employment resurgence but Italy showing a significant post-2020 rise in out-of-school children, indicating uneven socioeconomic impacts. The GDP Growth analysis confirmed a deep, synchronized drop for all nations in 2020, with Italy and the UK hit hardest. The correlation matrix quantifies structural links: GDP per capita correlates positively with employment ratio, +0.65, and both correlate negatively with children out of school, –0.45 and –0.35, respectively.
+Between 2017 and 2023, the selected European economies demonstrated a three-tiered response to major shocks, stratified by existing wealth and structural characteristics. Norway and the United Kingdom, representing high-income economies, exhibited stability and rapid recovery; Norway’s GDP per capita (\$75k–\$80k range) showed only a minor fluctuation in 2020, and its employment ratio quickly surpassed pre-pandemic levels by 2022. Italy and Portugal, occupying the middle-income band, experienced synchronized contractions in GDP per capita and GDP growth in 2020, followed by consistent, moderate recovery through 2023. Albania and Ukraine, the emerging economies, displayed the greatest divergence, with Albania demonstrating a strong employment resurgence but Italy showing a significant post-2020 rise in out-of-school children, indicating uneven socioeconomic impacts. The GDP Growth analysis confirmed a deep, synchronized drop for all nations in 2020, with Italy and the UK hit hardest. The correlation matrix quantifies structural links: GDP per capita correlates positively with employment ratio, +0.65, and both correlate negatively with children out of school, –0.45 and –0.35, respectively.
 
 # Discussion
 
