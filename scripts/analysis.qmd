@@ -133,6 +133,57 @@ Italy consistently maintains the lowest employment ratio. While the COVID-19 cri
 
 In contrast, Ukraine's path deviates significantly from the broader recovery pattern. Following its 2020 decline, its employment ratio continued to fall after 2021 due to the ongoing conflict. This decline reflects large-scale population displacement, widespread economic disruption, and severe demographic shocks. Collectively, the data illustrate that while most European nations had recovered from the COVID-19 impact by 2022 or 2023, Ukraine's situation underscores the profound and protracted effects of conflict on labor markets and overall economic stability.
 
+## GDP Growth Overtime
+
+```{python}
+
+plt.figure(figsize=(12, 6))
+
+
+countries_to_plot = ["Albania", "United Kingdom", "Italy", "Norway", "Portugal"]
+
+for country in countries_to_plot:
+    sub = df[df["country_name"] == country]
+
+    plt.plot(
+        sub["year"],
+        sub["gdp_growth"],
+        marker="o",
+        linewidth=2,
+        label=country
+    )
+
+
+plt.xlabel("Year")
+plt.ylabel("GDP Growth (%)")
+plt.title("GDP Growth Over Time (2017–2023) With COVID Indicator")
+
+
+plt.axvline(
+    x=2020,
+    color="red",
+    linestyle="--",
+    linewidth=1.5,
+    label="Start of COVID-19 (2020)"
+)
+
+plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
+plt.grid(True)
+plt.tight_layout()
+
+
+plt.savefig("../figures/gdp_growth.png", dpi=300)
+plt.show()
+
+
+```
+
+The GDP growth patterns across the five countries show stable and moderate expansion from 2017 to 2019, with most countries growing between 1 to 4 percent. Norway and Portugal performed slightly better than the others during this period, while Italy and the United Kingdom exhibited slower but still positive growth. Overall, the pre pandemic years reflect steady macroeconomic conditions, market strength, and  no drastic disruptions.
+
+A clear structural break appears in 2020 with the onset of COVID-19. All countries experienced sharp contractions, though the severity differed. The United Kingdom and Italy were hit the hardest, dropping to around negative 10 percent and negative 8 percent. Albania, Portugal, and Norway also declined substantially. This synchronized downturn aligns with the global shock from lockdowns, collapsing demand, and widespread economic restrictions.
+
+Growth rebounded strongly in 2021, with Albania, Italy, and Portugal showing the fastest recovery pace, reaching growth rates above 7 percent. Norway and the United Kingdom also recovered but more moderately. By 2022 and 2023, all countries returned to more stable levels of growth, though differences in recovery speed reflect structural economic differences and policy responses. Overall, the graph highlights the sharp COVID shock followed by an uneven but significant rebound across all five countries.
+
 ## Number of children out of (Primary) School
 
 ```{python}
