@@ -231,13 +231,24 @@ if len(countries) < n_rows * n_cols:
         fig.delaxes(axes[i])
 
 fig.suptitle('Children Out of School (Primary) Trends by Country (Absolute Count)', fontsize=18, y=1.02)
-plt.tight_layout(rect=[0, 0, 1, 0.98])
+plt.tight_layout(rect=[0, 0, 1, 0.95])
+
+legend_handles = [
+    plt.Rectangle((0, 0), 1, 1, fc="steelblue", edgecolor='black'),
+    plt.Rectangle((0, 0), 1, 1, fc="red", edgecolor='black')
+]
+legend_labels = ['Pre-COVID (2017-2019)', 'Post-COVID (2020 Onwards)']
+
+fig.legend(legend_handles, legend_labels, 
+           loc='lower center', 
+           ncol=2, 
+           bbox_to_anchor=(0.5, 0.0)) 
 
 plt.savefig('../figures/children_out_of_school_analysis.png')
 plt.show()
 ```
 
-The grid of bar charts reveals the different trends in the out-of-school number for each country, emphasizing that the post-2020 period [highlighted in red] varied for each country. The pandemic acted more as a stress test than an actual shock to European education systems. 
+The grid of bar charts reveals the different trends in the number of primary (K-12) out-of-school children for each country, emphasizing that the post-2020 period [highlighted in red] varied for each country. The pandemic acted more as a stress test than an actual shock to European education systems. 
 
 Albania and Italy demonstrated an increase in the out-of-school number following 2020. This rise is clearly visible in the increasing height of the red bars (2020–2023). Albania's number increased from 3,575 in 2019 to over 17,000 by 2023. Italy, which was originally the second-highest after Ukraine, peaked in 2022, suggesting that pandemic-related disruptions surpassed structural weaknesses in retention in both countries. 
 
