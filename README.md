@@ -1,3 +1,6 @@
+## Economic Analysis of European Countries
+Team member: Tom Suo 2549787, Lucy Liu 2561533, Leo Xu 2592825, Mike Wu 2549432, Santiago Vazquez 2592291
+
 ## **Overview**
 
 This project examines how key economic indicators changed before and after the COVID-19 pandemic across six European countries: Portugal, the United Kingdom, Norway, Albania, Ukraine, and Italy.
